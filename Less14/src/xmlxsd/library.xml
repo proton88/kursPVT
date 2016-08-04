@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><tc:listBook xmlns:tc="http://www.example.org/library" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/library library.xsd">
+
+    <Book id="1">
+        <author>Ozhegov</author>
+        <title>vocabulary</title>
+        <price>20</price>
+        <genre>science</genre>
+    </Book>
+
+    <Book id="2">
+        <author>God</author>
+        <title>bible</title>
+        <price>25</price>
+        <genre>science</genre>
+    </Book>
+
+<Book id="3"><author>Tolkien</author><title>Lord of the rings</title><price>30</price><genre>fantastic</genre></Book>
+</tc:listBook>

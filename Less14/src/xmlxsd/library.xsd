@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.example.org/library"
+	xmlns:tns="http://www.example.org/library">
+	
+	<element name="listBook">
+		<complexType>
+			<sequence>
+				<element name="Book" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<complexType name="Book">
+		<all>
+			<element name="author" type="tns:AuthorType"/>
+			<element name="title" type="string"/>
+			<element name="genre" type="tns:Genre"/>
+ 			<element name="price" type="integer"/>
+		</all>
+		<attribute name="id" type="int" use="required"/>
+	</complexType>	
+	<simpleType name="AuthorType">
+		<restriction base="string">
+			<pattern value="[A-Z]([a-z]*)"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="Genre">
+		<restriction base="string">
+			<enumeration value="fantastic"/>
+			<enumeration value="science"/>
+			<enumeration value="detective"/>
+			<enumeration value="biography"/>
+			<enumeration value="history"/>
+			<enumeration value="humor"/>
+		</restriction>
+	</simpleType>
+</schema>
