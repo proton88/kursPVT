@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 import by.my.library.dao.CommonDAO;
 import by.my.library.dao.exception.DAOException;
+import by.my.library.dao.impl.pool.ConnectionPool;
+import by.my.library.dao.impl.pool.ConnectionPoolException;
 import by.my.library.domain.User;
 
 public class SQLCommonDAO implements CommonDAO{
@@ -20,10 +22,7 @@ public class SQLCommonDAO implements CommonDAO{
 	    PreparedStatement st=null; //объект, который умеет выполнять запросы к БД
 	    ResultSet rs=null;//для запросов к БД
 	    try{
-	        //Class.forName("org.gjt.mm.mysql.Driver");//грузим класс драйвер в пам
-	        Class.forName("com.mysql.jdbc.Driver");//грузим класс драйвер в пам
-
-	        con= DriverManager.getConnection("jdbc:mysql://127.0.0.1/library", "root", "030588");//устанавливаем соед
+			con=ConnectionPool.getInstance().takeConnection();
 
 	        String sql = "SELECT * FROM users join userdata on users.id=userdata.users_id";//подготовленный запрос
 	        st=con.prepareStatement(sql);//защищен от выполнения sql атак
@@ -36,14 +35,21 @@ public class SQLCommonDAO implements CommonDAO{
 	        				rs.getString("surname"), rs.getString("adress"),rs.getString("pasport_id"));
 	        	}
 	        }
-	    }catch (ClassNotFoundException e){throw new DAOException(e);
+	    }catch (ConnectionPoolException e){throw new DAOException(e);
 	    }catch (SQLException e){throw new DAOException(e);
 	    }finally {
-	        try{
-	            if (con!=null){
-	                con.close();
-	            }
-	        }catch (SQLException e){throw new DAOException(e);}
+            if (st!=null){
+                try {
+					st.close();
+				} catch (SQLException e) {
+					throw new DAOException(e);
+				}
+            }
+            try {
+				ConnectionPool.getInstance().releaseConnection(con);
+			} catch (ConnectionPoolException e) {
+				throw new DAOException(e);
+			}
 	    }
 	    return user;
 

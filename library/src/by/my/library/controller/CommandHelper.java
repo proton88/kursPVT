@@ -6,6 +6,7 @@ import java.util.Map;
 import by.my.library.command.Command;
 import by.my.library.command.impl.AddBook;
 import by.my.library.command.impl.FindByTitle;
+import by.my.library.command.impl.Localization;
 import by.my.library.command.impl.Logination;
 import by.my.library.command.impl.Registration;
 import by.my.library.command.impl.ShowBooks;
@@ -19,6 +20,7 @@ public class CommandHelper {
 		commands.put(CommandName.FINDBYTITLE, new FindByTitle());
 		commands.put(CommandName.REGISTRATION, new Registration());
 		commands.put(CommandName.ADD_BOOK, new AddBook());
+		commands.put(CommandName.LOCALE, new Localization());
 	}
 	
 	Command getCommand(String name){
