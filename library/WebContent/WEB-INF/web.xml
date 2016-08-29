@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>myLibrary</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Controller</display-name>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>by.my.library.controller.Controller</servlet-class>
+    <init-param>
+      <param-name>servletId</param-name>
+      <param-value>1</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/Controller</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>CharsetFilter</display-name>
+    <filter-name>CharsetFilter</filter-name>
+    <filter-class>filters.CharsetFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharsetFilter</filter-name>
+    <url-pattern>/Controller</url-pattern>
+  </filter-mapping>
+  <listener>
+    <listener-class>listeners.ProjectSessionListener</listener-class>
+  </listener>
+  <session-config>
+    <session-timeout>10</session-timeout>
+  </session-config>
+  <context-param>
+    <param-name>author</param-name>
+    <param-value>Suglob A.A.</param-value>
+  </context-param>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/error404.jsp</location>
+  </error-page>
+  <listener>
+    <listener-class>by.my.library.controller.ConnectionPoolInit</listener-class>
+  </listener>
+</web-app>
