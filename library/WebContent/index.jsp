@@ -51,7 +51,7 @@
 	</form>
 	<br>
 	${reg_message}<br>
-	<form action="reg.jsp" method="post">
+	<form action="reg" method="post">
 		<input type="submit" value="${but_reg}"> 
 	</form>
 </body>

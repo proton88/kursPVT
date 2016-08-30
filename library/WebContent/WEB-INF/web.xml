@@ -23,6 +23,17 @@
     <servlet-name>Controller</servlet-name>
     <url-pattern>/Controller</url-pattern>
   </servlet-mapping>
+  
+  
+ <servlet>
+	<servlet-name>reg</servlet-name>
+ 	<jsp-file>/WEB-INF/jsp/reg.jsp</jsp-file>
+ </servlet>
+ <servlet-mapping>
+ 	<servlet-name>reg</servlet-name>
+	<url-pattern>/reg</url-pattern>
+ </servlet-mapping>
+  
   <filter>
     <display-name>CharsetFilter</display-name>
     <filter-name>CharsetFilter</filter-name>

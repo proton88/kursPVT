@@ -41,8 +41,9 @@
 </form>
 <br><br>
 <c:if test="${sessionScope.user.role=='admin'}">
+	<c:set var="mes" value="${message}"/>
 	<form action="${url}" method="post">
-		<input type="hidden" name="command" value="addBook"/>
+		<input type="hidden" name="command" value="add_Book"/>
 		${title}<br/>
 		<input type="text" name="title"><br>
 		${author}<br/>
@@ -54,6 +55,7 @@
 		ISBN<br/>
 		<input type="text" name="isbn"><br>
 		<input type="submit" name="Add book" value="${add_book}"/>
+		${mes}
 	</form>
 </c:if>
 </body> 
