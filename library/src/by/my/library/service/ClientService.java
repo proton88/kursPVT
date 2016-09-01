@@ -12,4 +12,6 @@ public interface ClientService {
 	User registration(String login, String password, String passwordRepeat, String name, String surname, 
 			String adress, String passportId) throws ServiceException, ServicePasswordException, 
 	ServicePassportException, ServiceRepeatUserException, ServiceLoginPassException;
+	String blockUser(String login) throws ServiceException;
+	String unBlockUser(String login) throws ServiceException;
 }

@@ -34,7 +34,7 @@ public class SQLUserDAO implements UserDAO{
 			rs=ps.executeQuery(sql);
 			while(rs.next()){
 				catalog.add(new Book(rs.getInt("id"),rs.getString("title"),rs.getString("author"),
-						rs.getString("genre"), rs.getInt("price"),rs.getLong("isbn")));
+						rs.getString("genre"), rs.getDouble("price"),rs.getLong("isbn")));
 			}
 		}catch (ConnectionPoolException e){throw new DAOException(e);
 	    }catch (SQLException e){throw new DAOException(e);

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
-	//private int id;
+	private int block;
 	private String login;
 	private String password;
 	private String role;
@@ -12,6 +12,7 @@ public class User implements Serializable{
 	private String surname;
 	private String adress;
 	private String passportId;
+	
 
 	public User(){}
 	
@@ -84,6 +85,13 @@ public class User implements Serializable{
 		this.passportId = passportId;
 	}
 	
-	
+	public int getBlock() {
+		return block;
+	}
+
+	public void setBlock(int block) {
+		this.block = block;
+	}
+
 
 }

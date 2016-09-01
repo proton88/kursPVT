@@ -17,6 +17,7 @@ public class SQLCommonDAO implements CommonDAO{
 	@Override
 	public User logination(String login, String password) throws DAOException {
 		User user=null;
+		int userBlock;
 		
 		Connection con=null;//объект для соед с БД
 	    PreparedStatement st=null; //объект, который умеет выполнять запросы к БД
@@ -33,22 +34,24 @@ public class SQLCommonDAO implements CommonDAO{
 	        	if (rs.getString("login").equals(login) && rs.getString("password").equals(password)){
 	        		user=new User(login,password,rs.getString("role"), rs.getString("name"), 
 	        				rs.getString("surname"), rs.getString("adress"),rs.getString("pasport_id"));
+	        		user.setBlock(rs.getInt("block"));
+	        		
 	        	}
 	        }
-	    }catch (ConnectionPoolException e){throw new DAOException(e);
-	    }catch (SQLException e){throw new DAOException(e);
+	    }catch (ConnectionPoolException e){throw new DAOException("Don't take connection pool", e);
+	    }catch (SQLException e){throw new DAOException("Wrong sql", e);
 	    }finally {
             if (st!=null){
                 try {
 					st.close();
 				} catch (SQLException e) {
-					throw new DAOException(e);
+					throw new DAOException("Don't close prepared statement", e);
 				}
             }
             try {
 				ConnectionPool.getInstance().releaseConnection(con);
 			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+				throw new DAOException("Don't release connection pool",e);
 			}
 	    }
 	    return user;

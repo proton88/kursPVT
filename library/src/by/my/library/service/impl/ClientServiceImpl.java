@@ -1,5 +1,6 @@
 package by.my.library.service.impl;
 
+import by.my.library.dao.AdminDAO;
 import by.my.library.dao.CommonDAO;
 import by.my.library.dao.DAOFactory;
 import by.my.library.dao.UserDAO;
@@ -11,7 +12,7 @@ import by.my.library.service.exception.ServiceLoginPassException;
 import by.my.library.service.exception.ServicePassportException;
 import by.my.library.service.exception.ServicePasswordException;
 import by.my.library.service.exception.ServiceRepeatUserException;
-import utils.RegularChanges;
+import by.my.library.service.utils.RegularChanges;
 
 public class ClientServiceImpl implements ClientService{
 
@@ -75,6 +76,36 @@ public class ClientServiceImpl implements ClientService{
 			throw new ServiceException(e);
 		}
 		return user;
+	}
+
+	@Override
+	public String blockUser(String login) throws ServiceException {
+		String responseUserBlock="";
+		////////////////////////////////////////////////////
+		DAOFactory factory = DAOFactory.getInstance();
+		AdminDAO adminDAO=factory.getAdminDAO();
+		///////////////////////////////////////////////////
+		try{
+			responseUserBlock=adminDAO.userBlock(login);
+		}catch(DAOException e){
+			throw new ServiceException("user block error in admin DAO", e);
+		}
+		return responseUserBlock;
+	}
+
+	@Override
+	public String unBlockUser(String login) throws ServiceException {
+		String responseUserUnBlock="";
+		////////////////////////////////////////////////////
+		DAOFactory factory = DAOFactory.getInstance();
+		AdminDAO adminDAO=factory.getAdminDAO();
+		///////////////////////////////////////////////////
+		try{
+			responseUserUnBlock=adminDAO.userUnBlock(login);
+		}catch(DAOException e){
+			throw new ServiceException("user unblock error in admin DAO", e);
+		}
+		return responseUserUnBlock;
 	}
 
 }

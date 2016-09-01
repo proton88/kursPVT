@@ -20,6 +20,12 @@
 	<fmt:message bundle="${loc}" key="main.input_genre" var="genre"/>
 	<fmt:message bundle="${loc}" key="main.input_price" var="price"/>
 	<fmt:message bundle="${loc}" key="main.button_add_book" var="add_book"/>
+	<fmt:message bundle="${loc}" key="main.input_block_user" var="user_block_text"/>
+	<fmt:message bundle="${loc}" key="main.button_block_user" var="user_block_button"/>
+	<fmt:message bundle="${loc}" key="main.button_unblock_user" var="user_unblock_button"/>
+	<fmt:message bundle="${loc}" key="${sessionScope.message}" var="messtranslate"/>
+	
+	
 	
 <c:set var="url" value="${requestScope.encodeURL}"/>
 	<c:if test="${url==null}">
@@ -41,7 +47,6 @@
 </form>
 <br><br>
 <c:if test="${sessionScope.user.role=='admin'}">
-	<c:set var="mes" value="${message}"/>
 	<form action="${url}" method="post">
 		<input type="hidden" name="command" value="add_Book"/>
 		${title}<br/>
@@ -55,7 +60,23 @@
 		ISBN<br/>
 		<input type="text" name="isbn"><br>
 		<input type="submit" name="Add book" value="${add_book}"/>
-		${mes}
+		${messtranslate}
+	</form>
+	<br>
+	<form action="${url}" method="post">
+		<input type="hidden" name="command" value="block_user"/>
+		${user_block_text}<br/>
+		<input type="text" name="user_block"><br>
+		<input type="submit" value="${user_block_button}">
+		${responseBlock}
+	</form>
+	<br>
+	<form action="${url}" method="post">
+		<input type="hidden" name="command" value="unblock_user"/>
+		${user_block_text}<br/>
+		<input type="text" name="user_unblock"><br>
+		<input type="submit" value="${user_unblock_button}">
+		${responseUnBlock}
 	</form>
 </c:if>
 </body> 

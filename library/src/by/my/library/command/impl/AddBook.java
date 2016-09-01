@@ -45,9 +45,9 @@ public class AddBook implements Command{
 				message="Что-то не так, книга не добавлена";
 			}
 		}catch (ServiceEmptyFieldsException e){
-			message="Заполните, пожалуйста все поля";
+			message="main.message_allfields";
 		}catch (ServicePriceException e){
-			message="Неправильная цена";
+			message="main.message_wrongprice";
 		}catch (ServiceIsbnException e){
 			message="Неправильный isbn, должно быть 9 цифр";
 		}catch (ServiceException e) {
@@ -58,8 +58,7 @@ public class AddBook implements Command{
 		try {
 			request.getRequestDispatcher("WEB-INF/jsp/main.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CommandException(e);
 		}
 	}
 

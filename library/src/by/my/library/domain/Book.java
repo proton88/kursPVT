@@ -3,7 +3,7 @@ package by.my.library.domain;
 public class Book {
 	private String author;
 	private String title;
-	private int price;
+	private double price;
 	private int id;
 	private String genre;
 	private long isbn;
@@ -19,7 +19,7 @@ public class Book {
 	}
 
 	
-	public Book(int id, String title, String author, String genre, int price,  long isbn){
+	public Book(int id, String title, String author, String genre, double price,  long isbn){
 		this.title = title;
 		this.price = price;
 		this.author=author;
@@ -46,12 +46,12 @@ public class Book {
 	}
 
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

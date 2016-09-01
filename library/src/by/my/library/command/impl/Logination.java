@@ -37,8 +37,18 @@ public class Logination implements Command{
 		}catch (ServiceException e){
 			throw new CommandException(e);
 		} 
+		
 		// если юзера нет, значит неправильные логин, пассворд
 		if (user1!=null){
+			if (user1.getBlock()==1){
+				try{
+					request.setAttribute("error", "Извините, вы заблокированы, обратитесь к администратору!");
+					request.getRequestDispatcher("index.jsp").forward(request, response);
+				}catch(ServletException|IOException e){
+					throw new CommandException(e);
+				}
+				return;
+			}
 			HttpSession session = request.getSession(true);
 			//session.invalidate();//нужно чтоб при смене пользователя менялась сессия
 			//session = request.getSession(true);

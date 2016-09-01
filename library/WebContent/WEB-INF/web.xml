@@ -47,7 +47,7 @@
     <listener-class>listeners.ProjectSessionListener</listener-class>
   </listener>
   <session-config>
-    <session-timeout>10</session-timeout>
+    <session-timeout>40</session-timeout>
   </session-config>
   <context-param>
     <param-name>author</param-name>

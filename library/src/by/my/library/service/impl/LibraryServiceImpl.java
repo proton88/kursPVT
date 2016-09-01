@@ -58,14 +58,14 @@ public class LibraryServiceImpl implements LibraryService{
 				genre==null || genre.isEmpty() || isbn==null || isbn.isEmpty()){
 			throw new ServiceEmptyFieldsException();
 		}
-		int priceInt;
+		double priceDouble;
 		long isbnLong;
 		try{
-			priceInt=Integer.parseInt(price);
+			priceDouble=Double.parseDouble(price);
 		}catch(NumberFormatException e){
 			throw new ServicePriceException();
 		}
-		if (priceInt<=0){
+		if (priceDouble<=0){
 			throw new ServicePriceException();
 		}
 		try{
@@ -76,7 +76,7 @@ public class LibraryServiceImpl implements LibraryService{
 		if (isbnLong<=0 || isbnLong>999999999){
 			throw new ServiceIsbnException();
 		}		
-		Book book=new Book(1,title,author,genre,priceInt,isbnLong);
+		Book book=new Book(1,title,author,genre,priceDouble,isbnLong);
 		////////////////////////////////////////////////////
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO=factory.getAdminDAO();

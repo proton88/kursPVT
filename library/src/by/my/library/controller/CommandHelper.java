@@ -5,11 +5,13 @@ import java.util.Map;
 
 import by.my.library.command.Command;
 import by.my.library.command.impl.AddBook;
+import by.my.library.command.impl.BlockUser;
 import by.my.library.command.impl.FindByTitle;
 import by.my.library.command.impl.Localization;
 import by.my.library.command.impl.Logination;
 import by.my.library.command.impl.Registration;
 import by.my.library.command.impl.ShowBooks;
+import by.my.library.command.impl.UnBlockUser;
 
 public class CommandHelper {
 	private Map<CommandName, Command> commands = new HashMap<>(); 
@@ -21,6 +23,8 @@ public class CommandHelper {
 		commands.put(CommandName.REGISTRATION, new Registration());
 		commands.put(CommandName.ADD_BOOK, new AddBook());
 		commands.put(CommandName.LOCALE, new Localization());
+		commands.put(CommandName.BLOCK_USER, new BlockUser());
+		commands.put(CommandName.UNBLOCK_USER, new UnBlockUser());
 	}
 	
 	Command getCommand(String name){
