@@ -11,4 +11,5 @@ public interface UserDAO {
 	Book findBookByTitle(String title) throws DAOException;
 	User registration(String login, String password, String passwordRepeat, String name, String surname,
 			String adress, String passportId) throws DAOException;
+	List<Book> find(String textFind) throws DAOException;
 }

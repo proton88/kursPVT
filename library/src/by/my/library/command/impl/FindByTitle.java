@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import by.my.library.command.Command;
 import by.my.library.command.exception.CommandException;
+import by.my.library.command.utils.SessionAndUser;
 import by.my.library.domain.Book;
 import by.my.library.domain.User;
 import by.my.library.service.LibraryService;
@@ -23,26 +24,7 @@ public class FindByTitle implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		HttpSession session=request.getSession(false);
-		//session=null;
-		if (session == null){
-			try{
-				request.setAttribute("error", "Извините, ваша сессия недействительна, пожалуйста, авторизуйтесь");
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}catch(ServletException|IOException e){
-				throw new CommandException(e);
-			}
-			return;
-		}
-		User user = (User)session.getAttribute("user");
-		
-		if(user==null){
-			try{
-				request.setAttribute("error", "Извините, такого пользователя нет, попробуйте авторизоваться еще раз!");
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
-			}catch(ServletException|IOException e){
-				throw new CommandException(e);
-			}
+		if (!SessionAndUser.isSessionAndUser(request, response)){
 			return;
 		}
 		String title=request.getParameter(TITLE);

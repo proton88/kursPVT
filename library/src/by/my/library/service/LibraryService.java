@@ -9,4 +9,5 @@ public interface LibraryService {
 	List<Book> showBooks() throws ServiceException;
 	Book findBookByTitle(String title) throws ServiceException;
 	boolean addBook(String title, String author, String genre, String price, String isbn) throws ServiceException;
+	List<Book> find(String textFind) throws ServiceException;
 }

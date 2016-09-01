@@ -7,6 +7,7 @@ import by.my.library.command.Command;
 import by.my.library.command.impl.AddBook;
 import by.my.library.command.impl.BlockUser;
 import by.my.library.command.impl.FindByTitle;
+import by.my.library.command.impl.FullTextFind;
 import by.my.library.command.impl.Localization;
 import by.my.library.command.impl.Logination;
 import by.my.library.command.impl.Registration;
@@ -25,6 +26,7 @@ public class CommandHelper {
 		commands.put(CommandName.LOCALE, new Localization());
 		commands.put(CommandName.BLOCK_USER, new BlockUser());
 		commands.put(CommandName.UNBLOCK_USER, new UnBlockUser());
+		commands.put(CommandName.FIND, new FullTextFind());
 	}
 	
 	Command getCommand(String name){

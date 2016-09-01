@@ -15,101 +15,147 @@ import by.my.library.dao.impl.pool.ConnectionPoolException;
 import by.my.library.domain.Book;
 import by.my.library.domain.User;
 
-public class SQLUserDAO implements UserDAO{
+public class SQLUserDAO implements UserDAO {
 
 	@Override
 	public List<Book> getCatalog() throws DAOException {
-		List<Book> catalog=new ArrayList<Book>();
-		
-		Connection con=null;
-		PreparedStatement ps=null;
-		ResultSet rs=null;
-		
-		try{
-			con=ConnectionPool.getInstance().takeConnection();
-			
-			String sql="select * from books";
-			ps=con.prepareStatement(sql);
-			
-			rs=ps.executeQuery(sql);
-			while(rs.next()){
-				catalog.add(new Book(rs.getInt("id"),rs.getString("title"),rs.getString("author"),
-						rs.getString("genre"), rs.getDouble("price"),rs.getLong("isbn")));
+		List<Book> catalog = new ArrayList<Book>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = ConnectionPool.getInstance().takeConnection();
+
+			String sql = "select * from books";
+			ps = con.prepareStatement(sql);
+
+			rs = ps.executeQuery(sql);
+			while (rs.next()) {
+				catalog.add(new Book(rs.getInt("id"), rs.getString("title"), rs.getString("author"),
+						rs.getString("genre"), rs.getDouble("price"), rs.getLong("isbn")));
 			}
-		}catch (ConnectionPoolException e){throw new DAOException(e);
-	    }catch (SQLException e){throw new DAOException(e);
-	    }finally {
-	            if (ps!=null){
-	                try {
-						ps.close();
-					} catch (SQLException e) {
-						throw new DAOException(e);
-					}
-	            }
-	            try {
-					ConnectionPool.getInstance().releaseConnection(con);
-				} catch (ConnectionPoolException e) {
+		} catch (ConnectionPoolException e) {
+			throw new DAOException(e);
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
 					throw new DAOException(e);
 				}
-	    }
-		//catalog=new ArrayList<Book>(); - для получения ошибки пустого каталога
+			}
+			try {
+				ConnectionPool.getInstance().releaseConnection(con);
+			} catch (ConnectionPoolException e) {
+				throw new DAOException(e);
+			}
+		}
+		// catalog=new ArrayList<Book>(); - для получения ошибки пустого
+		// каталога
 		return catalog;
 	}
 
 	@Override
 	public Book findBookByTitle(String title) throws DAOException {
-		Book book=null;
-		List<Book> catalog=getCatalog();
-		for(Book b:catalog){
-			if(b.getTitle().toUpperCase().equals(title.toUpperCase())){
-				book=b;
+		Book book = null;
+		List<Book> catalog = getCatalog();
+		for (Book b : catalog) {
+			if (b.getTitle().toUpperCase().equals(title.toUpperCase())) {
+				book = b;
 			}
 		}
-		//book=new Book(3,"Java","ds","f",41,7666);//проверочная книга, если БД не работает
+		// book=new Book(3,"Java","ds","f",41,7666);//проверочная книга, если БД
+		// не работает
 		return book;
 	}
 
 	@Override
 	public User registration(String login, String password, String passwordRepeat, String name, String surname,
 			String adress, String passportId) throws DAOException {
-		Connection con=null;
-		PreparedStatement st=null;
-		PreparedStatement st2=null;
-		
-		String sql = "INSERT INTO users(login, password, role) VALUES(?,?,?)";//подготовленный запрос
+		Connection con = null;
+		PreparedStatement st = null;
+		PreparedStatement st2 = null;
+
+		String sql = "INSERT INTO users(login, password, role) VALUES(?,?,?)";// подготовленный
+																				// запрос
 		String sql2 = "INSERT INTO userdata(name, surname, adress, pasport_id) VALUES(?,?,?,?)";
-		try{
-			con=ConnectionPool.getInstance().takeConnection();
-	        st=con.prepareStatement(sql);
-			st2=con.prepareStatement(sql2);//защищен от выполнения sql атак
-	        st.setString(1, login);
-	        st.setString(2, password);
-	        st.setString(3,"user");
-	        st.executeUpdate();
-	        st2.setString(1, name);
-	        st2.setString(2, surname);
-	        st2.setString(3, adress);
-	        st2.setString(4, passportId);
-	        st2.executeUpdate();
+		try {
+			con = ConnectionPool.getInstance().takeConnection();
+			st = con.prepareStatement(sql);
+			st2 = con.prepareStatement(sql2);// защищен от выполнения sql атак
+			st.setString(1, login);
+			st.setString(2, password);
+			st.setString(3, "user");
+			st.executeUpdate();
+			st2.setString(1, name);
+			st2.setString(2, surname);
+			st2.setString(3, adress);
+			st2.setString(4, passportId);
+			st2.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
 			throw new DAOException(e);
-		}finally {
-            if (st!=null || st2!=null){
-                try {
+		} finally {
+			if (st != null || st2 != null) {
+				try {
 					st.close();
 					st2.close();
 				} catch (SQLException e) {
 					throw new DAOException(e);
 				}
-            }
-            try {
+			}
+			try {
 				ConnectionPool.getInstance().releaseConnection(con);
 			} catch (ConnectionPoolException e) {
 				throw new DAOException(e);
 			}
 		}
-		User user= new User(login, password, "user", name, surname, adress, passportId);
+		User user = new User(login, password, "user", name, surname, adress, passportId);
 		return user;
+	}
+
+	@Override
+	public List<Book> find(String textFind) throws DAOException {
+		List<Book> catalog = new ArrayList<Book>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = ConnectionPool.getInstance().takeConnection();
+
+			String sql = "SELECT * FROM books WHERE MATCH (title, author, genre) AGAINST (?);";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, textFind);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				catalog.add(new Book(rs.getInt("id"), rs.getString("title"), rs.getString("author"),
+						rs.getString("genre"), rs.getDouble("price"), rs.getLong("isbn")));
+			}
+		} catch (ConnectionPoolException e) {
+			throw new DAOException(e);
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					throw new DAOException(e);
+				}
+			}
+			try {
+				ConnectionPool.getInstance().releaseConnection(con);
+			} catch (ConnectionPoolException e) {
+				throw new DAOException(e);
+			}
+		}
+		return catalog;
 	}
 
 }

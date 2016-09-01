@@ -27,28 +27,6 @@ public class ShowBooks implements Command{
 		if (!SessionAndUser.isSessionAndUser(request, response)){
 			return;
 		}
-		/*HttpSession session=request.getSession(false);
-		//session=null;
-		if (session == null){
-			try{
-				request.setAttribute("error", "Извините, ваша сессия недействительна, пожалуйста, авторизуйтесь");
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}catch(ServletException|IOException e){
-				throw new CommandException(e);
-			}
-			return;
-		}
-		User user = (User)session.getAttribute("user");
-		
-		if(user==null){
-			try{
-				request.setAttribute("error", "Извините, такого пользователя нет, попробуйте авторизоваться еще раз!");
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
-			}catch(ServletException|IOException e){
-				throw new CommandException(e);
-			}
-			return;
-		}*/
 		// запрашивать у сервисов функцию вернуть книги из библиотеки
 		///////////////////////////////////////////////////////////////////////////////
 		ServiceFactory factory = ServiceFactory.getInstance();
@@ -58,7 +36,7 @@ public class ShowBooks implements Command{
 		try {
 			catalog = service.showBooks();
 		} catch (ServiceException e1) {
-			throw new CommandException(e1);
+			throw new CommandException("Don't execute show books", e1);
 		}
 	
 		if(catalog.isEmpty()){
@@ -68,7 +46,6 @@ public class ShowBooks implements Command{
 			try {
 				dispatcher.forward(request, response);
 			} catch (ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				throw new CommandException(e);
 			}
 			return;
@@ -79,7 +56,6 @@ public class ShowBooks implements Command{
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
 			throw new CommandException(e);
 		}
 		

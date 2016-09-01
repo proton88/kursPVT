@@ -15,6 +15,7 @@
 	<fmt:message bundle="${loc}" key="main.button_show_books" var="show_books"/>
 	<fmt:message bundle="${loc}" key="main.mes_book_title" var="book_title"/>
 	<fmt:message bundle="${loc}" key="main.button_find_book" var="find_book"/>
+	<fmt:message bundle="${loc}" key="main.input_find_book_text" var="find_book_text"/>
 	<fmt:message bundle="${loc}" key="main.input_title" var="title"/>
 	<fmt:message bundle="${loc}" key="main.input_author" var="author"/>
 	<fmt:message bundle="${loc}" key="main.input_genre" var="genre"/>
@@ -43,6 +44,12 @@
 	<input type="hidden" name="command" value="findByTitle"/>
 	${book_title}<br/>
 	<input type="text" name="bookTitle">
+	<input type="submit" name="Find book" value="${find_book}"/>
+</form>
+<form action="${url}" method="post">
+	<input type="hidden" name="command" value="find"/>
+	${find_book_text}<br/>
+	<input type="text" name="bookFind">
 	<input type="submit" name="Find book" value="${find_book}"/>
 </form>
 <br><br>
