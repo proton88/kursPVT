@@ -48,15 +48,15 @@ public class Registration implements Command{
 		try{
 			user1= service.registration(login, password, passwordRepeat, name, surname, adress, passportId);
 		}catch (ServicePasswordException e){
-			error="Извините, не совпадает проверочный пароль";
+			error="reg.password";
 		}catch (ServiceRepeatUserException e){
-			error="Извините, такой пользователь уже есть";
+			error="reg.user";
 		}catch (ServicePassportException e){
-			error="Извините, не правильный номер паспорта";
+			error="reg.passport";
 		}catch (ServiceLoginPassException e){
-			error="Извините, вы не ввели логин или пароль";
+			error="reg.login_password";
 		}catch (ServiceException e){
-			throw new CommandException(e);
+			throw new CommandException("Don't execute registration",e);
 		} 
 		
 		if (user1!=null){
@@ -68,18 +68,18 @@ public class Registration implements Command{
 			try {
 				dispather.forward(request, response);
 			} catch (ServletException | IOException e) {
-				throw new CommandException(e);
+				throw new CommandException("Don't execute main.jsp",e);
 			}		
 		//session.invalidate();	
 		}else{
 			try{
 				if (error.isEmpty()){
-					error="Попробуйте зарегистрироваться еще раз!";
+					error="reg.else";
 				}
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("reg.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/jsp/reg.jsp").forward(request, response);
 			}catch(ServletException|IOException e){
-				throw new CommandException(e);
+				throw new CommandException("Don't execute reg.jsp",e);
 			}
 		}
 		

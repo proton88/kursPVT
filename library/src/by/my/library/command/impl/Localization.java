@@ -22,7 +22,7 @@ public class Localization implements Command{
 		try {
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
-			throw new CommandException(e);
+			throw new CommandException("Don't execute index.jsp",e);
 		}
 	}
 

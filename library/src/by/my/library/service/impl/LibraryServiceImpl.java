@@ -45,7 +45,7 @@ public class LibraryServiceImpl implements LibraryService {
 		try {
 			book = userDAO.findBookByTitle(title);
 		} catch (DAOException e) {
-			throw new ServiceException(e);
+			throw new ServiceException("Don't execute finding book by title",e);
 		}
 
 		return book;
@@ -73,7 +73,7 @@ public class LibraryServiceImpl implements LibraryService {
 		} catch (NumberFormatException e) {
 			throw new ServiceIsbnException();
 		}
-		if (isbnLong <= 0 || isbnLong > 999999999) {
+		if (isbnLong <= 99999999 || isbnLong > 999999999) {
 			throw new ServiceIsbnException();
 		}
 		Book book = new Book(1, title, author, genre, priceDouble, isbnLong);
@@ -86,7 +86,7 @@ public class LibraryServiceImpl implements LibraryService {
 				return false;
 			}
 		} catch (DAOException e) {
-			throw new ServiceException(e);
+			throw new ServiceException("Don't execute addbook",e);
 		}
 		return true;
 	}
@@ -101,7 +101,7 @@ public class LibraryServiceImpl implements LibraryService {
 		try {
 			catalog = userDAO.find(textFind);
 		} catch (DAOException e) {
-			throw new ServiceException(e);
+			throw new ServiceException("Don't execute find book",e);
 		}
 		return catalog;
 	}

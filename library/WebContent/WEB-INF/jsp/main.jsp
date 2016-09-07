@@ -24,8 +24,15 @@
 	<fmt:message bundle="${loc}" key="main.input_block_user" var="user_block_text"/>
 	<fmt:message bundle="${loc}" key="main.button_block_user" var="user_block_button"/>
 	<fmt:message bundle="${loc}" key="main.button_unblock_user" var="user_unblock_button"/>
-	<fmt:message bundle="${loc}" key="${sessionScope.message}" var="messtranslate"/>
-	
+	<c:if test="${requestScope.message!=null}">
+		<fmt:message bundle="${loc}" key="${message}" var="messtranslate"/>
+	</c:if>
+	<c:if test="${responseBlock!=null}">
+		<fmt:message bundle="${loc}" key="${responseBlock}" var="responseBlock_loc"/>
+	</c:if>
+	<c:if test="${responseUnBlock!=null}">
+		<fmt:message bundle="${loc}" key="${responseUnBlock}" var="responseUnBlock_loc"/>
+	</c:if>
 	
 	
 <c:set var="url" value="${requestScope.encodeURL}"/>
@@ -75,7 +82,7 @@
 		${user_block_text}<br/>
 		<input type="text" name="user_block"><br>
 		<input type="submit" value="${user_block_button}">
-		${responseBlock}
+		${responseBlock_loc}
 	</form>
 	<br>
 	<form action="${url}" method="post">
@@ -83,7 +90,7 @@
 		${user_block_text}<br/>
 		<input type="text" name="user_unblock"><br>
 		<input type="submit" value="${user_unblock_button}">
-		${responseUnBlock}
+		${responseUnBlock_loc}
 	</form>
 </c:if>
 </body> 

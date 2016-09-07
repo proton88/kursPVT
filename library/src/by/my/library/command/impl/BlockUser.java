@@ -33,12 +33,15 @@ public class BlockUser implements Command{
 		} catch (ServiceException e1) {
 			throw new CommandException("Error in service blockUser",e1);
 		}
-		
-		request.setAttribute("responseBlock", responseBlock);
+		if(responseBlock.equals("ok")){
+			responseBlock="main.response_block";
+		}
+			request.setAttribute("responseBlock", responseBlock);
+
 		try {
 			request.getRequestDispatcher("WEB-INF/jsp/main.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
-			throw new CommandException("forward error in blockUser",e);
+			throw new CommandException("Don't execute main.jsp",e);
 		}
 	}
 

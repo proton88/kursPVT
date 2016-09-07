@@ -22,7 +22,6 @@ public class Logination implements Command{
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
-		
 		String login=request.getParameter(LOGIN);
 		String password=request.getParameter(PASSWORD);
 		///////////////////////////////////////////////////////////////////////////////
@@ -35,17 +34,17 @@ public class Logination implements Command{
 		try{
 			user1= service.logination(login, password);
 		}catch (ServiceException e){
-			throw new CommandException(e);
+			throw new CommandException("Don't get user", e);
 		} 
 		
 		// если юзера нет, значит неправильные логин, пассворд
 		if (user1!=null){
 			if (user1.getBlock()==1){
 				try{
-					request.setAttribute("error", "»звините, вы заблокированы, обратитесь к администратору!");
+					request.setAttribute("error", "index.error_block");
 					request.getRequestDispatcher("index.jsp").forward(request, response);
 				}catch(ServletException|IOException e){
-					throw new CommandException(e);
+					throw new CommandException("Don't execute index.jsp",e);
 				}
 				return;
 			}
@@ -57,20 +56,20 @@ public class Logination implements Command{
 			try {
 				dispather.forward(request, response);
 			} catch (ServletException | IOException e) {
-				throw new CommandException(e);
+				throw new CommandException("Don't execute main.jsp",e);
 			}		
 		//session.invalidate();	
 		}else{
 			try{
-				request.setAttribute("error", "»звините, такого пользовател€ нет, попробуйте авторизоватьс€ еще раз!");
+				request.setAttribute("error", "index.error_not_user");
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			}catch(ServletException|IOException e){
-				throw new CommandException(e);
+				throw new CommandException("Don't execute index.jsp",e);
 			}
 		}
 		//здесь надо помен€ть код, чтоб в куки сохран€лись им€ и пароль пользовател€, который авторизовалс€
 		//но дл€ удобства € пока хочу, чтоб всегда был админ-админ
-		Cookie[] cookies=request.getCookies();
+		/*Cookie[] cookies=request.getCookies();
 		boolean isLogin=false;
 		if (cookies!=null){
 			for(Cookie cook:cookies){
@@ -84,6 +83,6 @@ public class Logination implements Command{
 			Cookie c2=new Cookie("password","admin");
 			response.addCookie(c);
 			response.addCookie(c2);
-		}
+		}*/
 	}
 }

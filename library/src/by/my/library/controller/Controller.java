@@ -63,18 +63,25 @@ public class Controller extends HttpServlet {
 			
 			System.out.println("Session wasn't construct");
 		}else{
-			System.out.println(session.getId());
+			System.out.println("Session id: "+session.getId());
 		}
+		Integer counter=(Integer)session.getAttribute("counter");
+		if(counter==null){
+			session.setAttribute("counter", 1);
+		}else{
+			counter++;
+			session.setAttribute("counter", counter);
+		}
+		System.out.println("Количество обращений к сервлету в этой сессии: " + session.getAttribute("counter"));
 		
 		String name=request.getParameter(COMMAND);
 		Command command=commandHelper.getCommand(name);
 		try {
 			command.execute(request, response);
 		} catch (CommandException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

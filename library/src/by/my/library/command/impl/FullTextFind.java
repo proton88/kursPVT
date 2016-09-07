@@ -37,13 +37,13 @@ public class FullTextFind implements Command {
 		}
 	
 		if(catalog.isEmpty()){
-			request.setAttribute("errorpage", "Извините, книг нет.");
+			request.setAttribute("errorpage", "errorpage.message");
 			
 			RequestDispatcher dispatcher=request.getRequestDispatcher("WEB-INF/jsp/errorpage.jsp");
 			try {
 				dispatcher.forward(request, response);
 			} catch (ServletException | IOException e) {
-				throw new CommandException(e);
+				throw new CommandException("Don't execute errorpage.jsp",e);
 			}
 			return;
 		}
@@ -53,7 +53,7 @@ public class FullTextFind implements Command {
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
-			throw new CommandException(e);
+			throw new CommandException("Don't execute show_books.jsp",e);
 		}
 	}
 

@@ -27,20 +27,20 @@ public class SQLAdminDAO implements AdminDAO{
 	        st.setDouble(4, book.getPrice());
 	        st.setInt(5, (int)book.getIsbn());
 	        st.executeUpdate();
-		}catch (ConnectionPoolException e){throw new DAOException(e);
-	    }catch (SQLException e){throw new DAOException(e);
+		}catch (ConnectionPoolException e){throw new DAOException("Error connection pool",e);
+	    }catch (SQLException e){throw new DAOException("Wrong sql request",e);
 	    }finally {
 	            if (st!=null){
 	                try {
 						st.close();
 					} catch (SQLException e) {
-						throw new DAOException(e);
+						throw new DAOException("Don't close prepare statement",e);
 					}
 	            }
 	            try {
 					ConnectionPool.getInstance().releaseConnection(con);
 				} catch (ConnectionPoolException e) {
-					throw new DAOException(e);
+					throw new DAOException("Connection pool don't release connection",e);
 				}
 	    }
 		return true;
@@ -59,23 +59,23 @@ public class SQLAdminDAO implements AdminDAO{
 			st=con.prepareStatement(sql);
 	        st.setString(1, login);
 	        st.executeUpdate();
-		}catch (ConnectionPoolException e){throw new DAOException(e);
-	    }catch (SQLException e){throw new DAOException(e);
+		}catch (ConnectionPoolException e){throw new DAOException("Error connection pool",e);
+	    }catch (SQLException e){throw new DAOException("Wrong sql request",e);
 	    }finally {
 	            if (st!=null){
 	                try {
 						st.close();
 					} catch (SQLException e) {
-						throw new DAOException(e);
+						throw new DAOException("Don't close prepare statement",e);
 					}
 	            }
 	            try {
 					ConnectionPool.getInstance().releaseConnection(con);
 				} catch (ConnectionPoolException e) {
-					throw new DAOException(e);
+					throw new DAOException("Connection pool don't release connection",e);
 				}
 	    }
-		return "Пользователь заблокирован";
+		return "ok";
 	}
 
 	@Override
@@ -90,23 +90,23 @@ public class SQLAdminDAO implements AdminDAO{
 			st=con.prepareStatement(sql);
 	        st.setString(1, login);
 	        st.executeUpdate();
-		}catch (ConnectionPoolException e){throw new DAOException(e);
-	    }catch (SQLException e){throw new DAOException(e);
+		}catch (ConnectionPoolException e){throw new DAOException("Error connection pool",e);
+	    }catch (SQLException e){throw new DAOException("Wrong sql request",e);
 	    }finally {
 	            if (st!=null){
 	                try {
 						st.close();
 					} catch (SQLException e) {
-						throw new DAOException(e);
+						throw new DAOException("Don't close prepare statement",e);
 					}
 	            }
 	            try {
 					ConnectionPool.getInstance().releaseConnection(con);
 				} catch (ConnectionPoolException e) {
-					throw new DAOException(e);
+					throw new DAOException("Connection pool don't release connection",e);
 				}
 	    }
-		return "Пользователь разблокирован";
+		return "ok";
 	}
 
 }

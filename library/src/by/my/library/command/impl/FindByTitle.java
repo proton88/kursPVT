@@ -37,18 +37,16 @@ public class FindByTitle implements Command{
 		try {
 			book = service.findBookByTitle(title);
 		} catch (ServiceException e1) {
-			throw new CommandException(e1);
+			throw new CommandException("Book don't find",e1);
 		}
-		
 		if (book==null){
-			request.setAttribute("errorpage", "Извините, такой книги нет.");
+			request.setAttribute("errorpage", "errorpage.message");
 			
 			RequestDispatcher dispatcher=request.getRequestDispatcher("WEB-INF/jsp/errorpage.jsp");
 			try {
 				dispatcher.forward(request, response);
 			} catch (ServletException | IOException e) {
-				// TODO Auto-generated catch block
-				throw new CommandException(e);
+				throw new CommandException("Don't execute errorpage.jsp",e);
 			}
 			return;
 		}
@@ -61,8 +59,7 @@ public class FindByTitle implements Command{
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			throw new CommandException(e);
+			throw new CommandException("Don't execute show_books.jsp",e);
 		}
 	}
 

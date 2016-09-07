@@ -40,7 +40,7 @@ public class ShowBooks implements Command{
 		}
 	
 		if(catalog.isEmpty()){
-			request.setAttribute("errorpage", "Извините, книг нет.");
+			request.setAttribute("errorpage", "errorpage.message");
 			
 			RequestDispatcher dispatcher=request.getRequestDispatcher("WEB-INF/jsp/errorpage.jsp");
 			try {

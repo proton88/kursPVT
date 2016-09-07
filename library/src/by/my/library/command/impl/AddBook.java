@@ -40,25 +40,25 @@ public class AddBook implements Command{
 		String message="";
 		try {
 			if(service.addBook(title, author, genre, price, isbn)){
-				message="Книга успешно добавлена";
+				message="main.message_good";
 			}else{
-				message="Что-то не так, книга не добавлена";
+				message="main.message_wrong";
 			}
 		}catch (ServiceEmptyFieldsException e){
 			message="main.message_allfields";
 		}catch (ServicePriceException e){
 			message="main.message_wrongprice";
 		}catch (ServiceIsbnException e){
-			message="Неправильный isbn, должно быть 9 цифр";
+			message="main.message_wrongisbn";
 		}catch (ServiceException e) {
-			message="Что-то не так, книга не добавлена";
+			message="main.message_wrong";
 			throw new CommandException(e);
 		}
 		request.setAttribute("message", message);
 		try {
 			request.getRequestDispatcher("WEB-INF/jsp/main.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
-			throw new CommandException(e);
+			throw new CommandException("Don't execute main.jsp",e);
 		}
 	}
 

@@ -33,7 +33,9 @@ public class UnBlockUser implements Command{
 		} catch (ServiceException e1) {
 			throw new CommandException("Error in service unBlockUser",e1);
 		}
-		
+		if(responseUnBlock.equals("ok")){
+			responseUnBlock="main.response_Unblock";
+		}
 		request.setAttribute("responseUnBlock", responseUnBlock);
 		try {
 			request.getRequestDispatcher("WEB-INF/jsp/main.jsp").forward(request, response);

@@ -19,6 +19,9 @@
 	<fmt:message bundle="${loc}" key="index.button_login" var="but_login"/>
 	<fmt:message bundle="${loc}" key="index.message_reg" var="reg_message"/>
 	<fmt:message bundle="${loc}" key="index.button_reg" var="but_reg"/>
+	<c:if test="${error!=null}">
+		<fmt:message bundle="${loc}" key="${error}" var="error_message"/>
+	</c:if>
 	<c:set var="url" value="${requestScope.encodeURL}"/>
 	<c:if test="${url==null}">
 		<c:set var="url" value="Controller"/>
@@ -26,7 +29,7 @@
 	<form action="${url}" method="post">
 		<input type="hidden" name="command" value="locale">
 		<input type="hidden" name="locale" value="ru">
-		<input type="submit" value="${ru_button }">
+		<input type="submit" value="${ru_button}">
 	</form>
 	<form action="${url}" method="post">
 		<input type="hidden" name="command" value="locale">
@@ -35,7 +38,7 @@
 	</form>
 	<c:set var="messageRequest" value="${requestScope.error}"/>
 	<c:if test="${messageRequest!=null}">
-		<c:out value="${messageRequest}"/>
+		<c:out value="${error_message}"/>
 	</c:if>
 	<c:if test="${messageRequest==null}">
 		<c:out value="${message}"/>

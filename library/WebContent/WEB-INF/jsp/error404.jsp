@@ -10,5 +10,7 @@
 <body>
 <h3>Извините, такой страницы не существует.</h3>
 Request from ${pageContext.errorData.requestURI} is failed
+<br>
+<a href="index.jsp">Go to login page</a>
 </body>
 </html>

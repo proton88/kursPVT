@@ -47,7 +47,7 @@
     <listener-class>listeners.ProjectSessionListener</listener-class>
   </listener>
   <session-config>
-    <session-timeout>40</session-timeout>
+    <session-timeout>5</session-timeout>
   </session-config>
   <context-param>
     <param-name>author</param-name>
@@ -57,6 +57,10 @@
     <error-code>404</error-code>
     <location>/WEB-INF/jsp/error404.jsp</location>
   </error-page>
+  <error-page>
+	<exception-type>java.lang.RuntimeException</exception-type>
+	<location>/WEB-INF/jsp/error404.jsp</location>
+</error-page>
   <listener>
     <listener-class>by.my.library.controller.ConnectionPoolInit</listener-class>
   </listener>

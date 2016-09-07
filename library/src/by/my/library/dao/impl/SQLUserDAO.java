@@ -37,21 +37,21 @@ public class SQLUserDAO implements UserDAO {
 						rs.getString("genre"), rs.getDouble("price"), rs.getLong("isbn")));
 			}
 		} catch (ConnectionPoolException e) {
-			throw new DAOException(e);
+			throw new DAOException("Error connection pool",e);
 		} catch (SQLException e) {
-			throw new DAOException(e);
+			throw new DAOException("Wrong sql request",e);
 		} finally {
 			if (ps != null) {
 				try {
 					ps.close();
 				} catch (SQLException e) {
-					throw new DAOException(e);
+					throw new DAOException("Don't close prepare statement",e);
 				}
 			}
 			try {
 				ConnectionPool.getInstance().releaseConnection(con);
 			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+				throw new DAOException("Connection pool don't release connection",e);
 			}
 		}
 		// catalog=new ArrayList<Book>(); - для получения ошибки пустого
@@ -97,20 +97,20 @@ public class SQLUserDAO implements UserDAO {
 			st2.setString(4, passportId);
 			st2.executeUpdate();
 		} catch (SQLException | ConnectionPoolException e) {
-			throw new DAOException(e);
+			throw new DAOException("Wrong sql request",e);
 		} finally {
 			if (st != null || st2 != null) {
 				try {
 					st.close();
 					st2.close();
 				} catch (SQLException e) {
-					throw new DAOException(e);
+					throw new DAOException("Don't close prepare statement",e);
 				}
 			}
 			try {
 				ConnectionPool.getInstance().releaseConnection(con);
 			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+				throw new DAOException("Connection pool don't release connection",e);
 			}
 		}
 		User user = new User(login, password, "user", name, surname, adress, passportId);
@@ -138,21 +138,21 @@ public class SQLUserDAO implements UserDAO {
 						rs.getString("genre"), rs.getDouble("price"), rs.getLong("isbn")));
 			}
 		} catch (ConnectionPoolException e) {
-			throw new DAOException(e);
+			throw new DAOException("Error connection pool",e);
 		} catch (SQLException e) {
-			throw new DAOException(e);
+			throw new DAOException("Wrong sql request",e);
 		} finally {
 			if (ps != null) {
 				try {
 					ps.close();
 				} catch (SQLException e) {
-					throw new DAOException(e);
+					throw new DAOException("Don't close prepare statement",e);
 				}
 			}
 			try {
 				ConnectionPool.getInstance().releaseConnection(con);
 			} catch (ConnectionPoolException e) {
-				throw new DAOException(e);
+				throw new DAOException("Connection pool don't release connection",e);
 			}
 		}
 		return catalog;

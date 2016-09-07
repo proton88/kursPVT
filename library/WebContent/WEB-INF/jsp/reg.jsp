@@ -20,7 +20,8 @@
 	<fmt:message bundle="${loc}" key="reg.input_passport" var="passport"/>
 	<fmt:message bundle="${loc}" key="reg.button_reg" var="but_reg"/>
 	<c:if test="${error!=null}">
-		<c:out value="${error}"/>
+		<fmt:message bundle="${loc}" key="${error}" var="error_loc"/>
+		<c:out value="${error_loc}"/>
 	</c:if>
 	<form action="Controller" method="post">
 		<input type="hidden" name="command" value="registration">
